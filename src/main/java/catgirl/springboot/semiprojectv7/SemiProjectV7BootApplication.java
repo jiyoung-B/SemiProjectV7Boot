@@ -1,4 +1,4 @@
-package com.example.semiprojectv7boot;
+package catgirl.springboot.semiprojectv7;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

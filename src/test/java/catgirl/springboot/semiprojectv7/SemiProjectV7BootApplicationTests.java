@@ -1,4 +1,4 @@
-package com.example.semiprojectv7boot;
+package catgirl.springboot.semiprojectv7;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
