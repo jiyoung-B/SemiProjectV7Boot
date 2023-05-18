@@ -1,8 +1,6 @@
 package catgirl.springboot.semiprojectv7.dao;
 
 import catgirl.springboot.semiprojectv7.model.Board;
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -11,44 +9,34 @@ import java.util.Map;
 @Repository("brddao")
 public class BoardDAOImpl implements BoardDAO{
 
-    @Autowired
-    private SqlSession sqlSession;
-
 
     @Override
     public List<Board> selectBoard(int stbno) {
-
-        return sqlSession.selectList("board.selectBoard", stbno);
+        return null;
     }
 
     @Override
-    //public List<Board> selectBoard(int stbno, String ftype, String fkey) {
     public List<Board> selectBoard(Map<String, Object> params) {
-        return sqlSession.selectList("board.selectFindBoard", params);
+        return null;
     }
 
     @Override
     public int countBoard() {
-        return sqlSession.selectOne("board.countBoard");
-
+        return 0;
     }
 
     @Override
-    //public int countBoard(int stbno, String ftype, String fkey) {
     public int countBoard(Map<String, Object> params) {
-        return sqlSession.selectOne("board.countFindBoard", params);
+        return 0;
     }
 
     @Override
     public int insertBoard(Board bd) {
-        return sqlSession.insert("board.insertBoard", bd);
+        return 0;
     }
 
     @Override
     public Board selecOneBoard(String bno) {
-        sqlSession.update("board.countViewBoard", bno);
-        return sqlSession.selectOne("board.selectOneBoard", bno);
+        return null;
     }
-
-
 }
