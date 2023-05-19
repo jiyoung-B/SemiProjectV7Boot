@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 
 public class MemberTest {
@@ -50,6 +52,20 @@ public class MemberTest {
         Member m = new Member();
         m.setMbno(2L);
         memberRepository.delete(m);
+
+    }
+
+    @Test
+    @DisplayName("member login")
+    public void loginMember(){
+        Member m = new Member();
+        m.setUserid("abc123");
+        m.setPasswd("abd123"); // 틀리게 넣기
+        assertNull(memberRepository.findByUseridAndPasswd(m.getUserid(), m.getPasswd()));
+        m.setUserid("abc123");
+        m.setPasswd("987xyz"); // 맞게 넣기
+        assertNotNull(memberRepository.findByUseridAndPasswd(m.getUserid(), m.getPasswd()));
+
 
     }
 
