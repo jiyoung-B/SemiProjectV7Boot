@@ -1,10 +1,24 @@
 package catgirl.springboot.semiprojectv7.model;
 
-import lombok.Data;
+import lombok.*;
+import org.aspectj.weaver.loadtime.definition.Definition;
+import org.springframework.data.annotation.CreatedDate;
 
-@Data
+import javax.persistence.*;
+import java.sql.Date;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name="member")
 public class Member {
-    private String mbno;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long mbno;
     private String name;
     private String jumin1;
     private String jumin2;
@@ -15,7 +29,8 @@ public class Member {
     private String addr2;
     private String email;
     private String phone;
-    private String regdate;
+    @CreatedDate
+    private LocalDateTime regdate;
 
 
 }
