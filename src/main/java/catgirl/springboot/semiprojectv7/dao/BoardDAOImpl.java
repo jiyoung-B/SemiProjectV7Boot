@@ -42,7 +42,7 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public Board selecOneBoard(int bno) {
-
+        boardRepository.countViewBoard((long) bno); // 조회수 증가 후 글 가져오기
         return boardRepository.findById((long)bno).get();
     }
 }
