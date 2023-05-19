@@ -60,7 +60,7 @@ public class BoardController {
     }
 
     @GetMapping("/view")
-    public ModelAndView view(@RequestParam String bno){
+    public ModelAndView view(@RequestParam int bno){
         ModelAndView mv = new ModelAndView();
         mv.addObject("bd", brdsrv.readOneBoard(bno));
         mv.setViewName("board/view");

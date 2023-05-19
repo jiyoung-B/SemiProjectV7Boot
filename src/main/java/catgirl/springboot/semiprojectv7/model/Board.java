@@ -1,14 +1,32 @@
 package catgirl.springboot.semiprojectv7.model;
 
-import lombok.Data;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
 
-@Data
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
+@Table(name="board")
 public class Board {
-    private int bno;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long bno;
     private String title;
     private String userid;
-    private int thumbs;
-    private int views;
+    @Column(insertable = false, updatable = false)
+    private Integer thumbs;
+    @Column(insertable = false, updatable = false)
+    private Integer views;
     private String content;
-    private String regdate;
+    @CreatedDate
+    @Column(insertable = false, updatable = false)
+    private LocalDateTime regdate;
+
+
 }

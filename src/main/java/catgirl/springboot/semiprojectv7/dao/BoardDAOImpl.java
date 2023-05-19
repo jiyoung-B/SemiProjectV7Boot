@@ -1,6 +1,8 @@
 package catgirl.springboot.semiprojectv7.dao;
 
 import catgirl.springboot.semiprojectv7.model.Board;
+import catgirl.springboot.semiprojectv7.repository.BoardRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -8,11 +10,13 @@ import java.util.Map;
 
 @Repository("brddao")
 public class BoardDAOImpl implements BoardDAO{
+    @Autowired
+    BoardRepository boardRepository;
 
 
     @Override
     public List<Board> selectBoard(int stbno) {
-        return null;
+        return boardRepository.findAll();
     }
 
     @Override
@@ -32,11 +36,13 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public int insertBoard(Board bd) {
-        return 0;
+
+        return Math.toIntExact(boardRepository.save(bd).getBno());
     }
 
     @Override
-    public Board selecOneBoard(String bno) {
-        return null;
+    public Board selecOneBoard(int bno) {
+
+        return boardRepository.findById((long)bno).get();
     }
 }
