@@ -14,10 +14,7 @@ public class MemberDAOImpl implements MemberDAO{
     // 로그인 가능 여부 확인
     @Override
     public int selectLogin(Member m) {
-        int isLogin = -1;
-        if(memberRepository.findByUseridAndPasswd(m.getUserid(), m.getPasswd()) != null)
-            isLogin = 1;
-
-        return isLogin;
+        return memberRepository
+                .countByUseridAndPasswd(m.getUserid(), m.getPasswd());
     }
 }
