@@ -10,4 +10,8 @@ import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
+    boolean findByUseridEquals(String uid);
+
+    void findByUserid(String abc123);
+
 }

@@ -1,12 +1,12 @@
 package catgirl.springboot.semiprojectv7.model;
 
 import lombok.*;
-import org.aspectj.weaver.loadtime.definition.Definition;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -30,6 +30,7 @@ public class Member {
     private String email;
     private String phone;
     @CreatedDate
+    @Column(insertable = false, updatable = false)
     private LocalDateTime regdate;
 
 
