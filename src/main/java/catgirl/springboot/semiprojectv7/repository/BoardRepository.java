@@ -25,10 +25,10 @@ public interface BoardRepository extends PagingAndSortingRepository<Board, Long>
     // @Query("select ceil(count(bno)/25) from Board")
     int countBoardBy();
 
-    List<Board> findByTitleLike(Pageable paging, String fkey);
-    List<Board> findByTitleLikeOrContentLike(Pageable paging, String fkey1, String fkey2);
+    List<Board> findByTitleContains(Pageable paging, String fkey);
+    List<Board> findByTitleContainsOrContentContains(Pageable paging, String fkey1, String fkey2);
     List<Board> findByUserid(Pageable paging, String fkey);
-    List<Board> findByContentLike(Pageable paging, String fkey);
+    List<Board> findByContentContains(Pageable paging, String fkey);
 
 
 
