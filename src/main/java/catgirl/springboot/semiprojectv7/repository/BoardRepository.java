@@ -2,6 +2,7 @@ package catgirl.springboot.semiprojectv7.repository;
 
 import catgirl.springboot.semiprojectv7.model.Board;
 import catgirl.springboot.semiprojectv7.model.Zipcode;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +24,11 @@ public interface BoardRepository extends PagingAndSortingRepository<Board, Long>
 
     // @Query("select ceil(count(bno)/25) from Board")
     int countBoardBy();
+
+    List<Board> findByTitle(Pageable paging, String fkey);
+    List<Board> findByTitleOrContent(Pageable paging, String fkey1, String fkey2);
+    List<Board> findByUserid(Pageable paging, String fkey);
+    List<Board> findByContent(Pageable paging, String fkey);
 
 
 

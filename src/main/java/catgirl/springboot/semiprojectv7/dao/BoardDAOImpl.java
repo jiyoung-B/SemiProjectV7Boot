@@ -26,15 +26,32 @@ public class BoardDAOImpl implements BoardDAO{
 
     @Override
     public List<Board> selectBoard(Map<String, Object> params) {
-        return null;
+        String fkey = params.get("fkey").toString();
+        String ftype = params.get("ftype").toString();
+        int cpage = (int) params.get("stbno");
+        Pageable paging =
+                PageRequest.of(cpage, 25, Sort.Direction.DESC, "bno");
+
+        List<Board> result = null;
+        switch (ftype){
+            case "title": // 제목으로 검색
+                result = boardRepository.findByTitle(paging, fkey); break;
+            case "titcont": // 제목+본문으로 검색
+                result = boardRepository.findByTitleOrContent(paging, fkey, fkey); break;
+            case "content": // 작성자로 검색
+                result = boardRepository.findByUserid(paging, fkey); break;
+            case "userid": // 본문으로 검색
+                result = boardRepository.findByContent(paging, fkey); break;
+        }
+        return result;
     }
 
     @Override
     public int countBoard() {
         // select ceil(count(bno)/25) from board
-        int allpage = boardRepository.countBoardBy();
+        int allcnt = boardRepository.countBoardBy();
 
-        return (int)Math.ceil(allpage/25);
+        return (int)Math.ceil(allcnt/25);
     }
 
     @Override
