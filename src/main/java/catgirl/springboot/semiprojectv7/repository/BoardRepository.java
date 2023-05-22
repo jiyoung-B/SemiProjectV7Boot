@@ -20,6 +20,13 @@ public interface BoardRepository extends PagingAndSortingRepository<Board, Long>
     @Query("update Board set views = views + 1 where bno = :bno")
     int countViewBoard(@Param("bno") long bno);
 
+
+    // @Query("select ceil(count(bno)/25) from Board")
+    int countBoardBy();
+
+
+
+
     /*@Query("update Board set views = views + 1 where bno = :bno")
     int countViewBoard(@Param("bno") long bno);*/
 
