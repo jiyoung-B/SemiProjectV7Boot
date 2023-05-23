@@ -33,8 +33,7 @@
                     <label class="col-3 col-form-label text-danger text-end" for="title">제목</label>
                     <div class="col-6">
                         <input type="text" name="title" id="title" class="form-control border-danger">
-                        <p th:if="${#fields.hasErrors('title')}"
-                        th:errors="*{title}"><p>
+                        <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-warning" />
                     </div>
                 </div>
                 <div class="row mt-2">
