@@ -15,14 +15,13 @@ public class BoardServiceImpl implements BoardService{
     private BoardDAO brddao;
 
     @Override
-    public List<Board> readBoard(int cpage) {
+    public Map<String, Object> readBoard(int cpage) {
 
         return brddao.selectBoard(cpage - 1);
     }
 
-
     @Override
-    public List<Board> readBoard(int cpage, String ftype, String fkey) {
+    public Map<String, Object> readBoard(int cpage, String ftype, String fkey) {
         int stbno = (cpage - 1);
         // 처리시 사용할 데이터들을 해쉬맵에 담아서 보냄
         Map<String, Object> params = new HashMap<>();
@@ -30,23 +29,7 @@ public class BoardServiceImpl implements BoardService{
         params.put("ftype", ftype);
         params.put("fkey", fkey);
 
-        return brddao.selectBoard(params);  // 나중에 if 써서 메서드 합칠 수 있어.
-    }
-
-    @Override
-    public int countBoard() {
-
-        return brddao.countBoard();
-    }
-
-    @Override
-    public int countBoard(String ftype, String fkey) {
-        // 처리시 사용할 데이터들을 해쉬맵에 담아서 보냄
-        Map<String, Object> params = new HashMap<>();
-        params.put("ftype", ftype);
-        params.put("fkey", fkey);
-
-        return brddao.countBoard(params);
+        return brddao.selectBoard(params);
     }
 
     @Override
