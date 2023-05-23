@@ -43,7 +43,7 @@ public class JoinController {
         // "redirect:/join/joinme?name=abc123&jumin1=123456&jumin2=1234567"
 
         // checkme에서 작성한 이름, 주민번호를 joinme에 보내는 방법2 - session
-        String viewPage = "redirect:/join/checkme";
+        String viewPage = "redirect:/join/joinme";
 
         if(br.hasErrors())
             viewPage = "join/checkme";
@@ -52,6 +52,13 @@ public class JoinController {
 
         return viewPage;
     }
+
+    @GetMapping("/joinme")
+    public String joinme(Model m){
+        m.addAttribute("member", new Member());
+        return "join/joinme";
+    }
+
     @PostMapping("/joinme")
     public ModelAndView joinme(Member mb){
         ModelAndView mv = new ModelAndView();
@@ -61,12 +68,26 @@ public class JoinController {
 
     }
 
+    @PostMapping("/joinme")
+    public String joinmeok(@Valid Member member,
+                           BindingResult br, HttpSession sess) {
+        String viewPage = "redirect:/join/joinok";
 
-//    @GetMapping("/joinok")
-//    public String joinok2(){
-//        return "join/joinok.tiles";
-//
-//    }
+        if (br.hasErrors()) viewPage = "join/joinme";
+        else {
+            jnsrv.newMember(member);
+            sess.invalidate();
+        }
+
+        return viewPage;
+    }
+
+
+    @GetMapping("/joinok")
+    public String joinok(){
+        return "join/joinok";
+
+    }
     @PostMapping("/joinok")
     public String joinok(Member m, String grecaptcha){
         String view = "error";
