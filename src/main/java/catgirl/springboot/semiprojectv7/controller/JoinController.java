@@ -59,14 +59,14 @@ public class JoinController {
         return "join/joinme";
     }
 
-    @PostMapping("/joinme")
+    /*@PostMapping("/joinme")
     public ModelAndView joinme(Member mb){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("join/joinme");
         mv.addObject("mb", mb);
         return mv;
 
-    }
+    }*/
 
     @PostMapping("/joinme")
     public String joinmeok(@Valid Member member,
