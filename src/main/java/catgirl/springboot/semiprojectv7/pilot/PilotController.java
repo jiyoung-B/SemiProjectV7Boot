@@ -10,6 +10,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.UUID;
 
@@ -59,6 +61,13 @@ public class PilotController {
             String fmt = "yyyyMMddHHmmss";
             SimpleDateFormat sdf = new SimpleDateFormat(fmt);
             uuid = sdf.format(new Date());
+            m.addAttribute("uuid", uuid);
+
+            // 겹치지 않는 파일명 작성을 위해 유니크한 값 생성3
+            uuid = LocalDate.now() + "" + LocalDateTime.now();
+            //  C:\Java\bootUpload\cat2023-05-242023-05-24T12:02:51.086.jpg
+            uuid = uuid.replace("-","")
+                    .replace(":","").replace(".", "");
             m.addAttribute("uuid", uuid);
 
             // 업로드한 파일 저장하기
