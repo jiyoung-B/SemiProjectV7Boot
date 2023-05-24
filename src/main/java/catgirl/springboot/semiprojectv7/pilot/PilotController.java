@@ -32,23 +32,32 @@ public class PilotController {
         if (attach.isEmpty())
             m.addAttribute("attach", "첨부파일이 없어요!!");
         else{
+            String fnmae = attach.getOriginalFilename();
+
             // 업로드한 파일이름 알아내기
-            m.addAttribute("filename", attach.getOriginalFilename());
+            m.addAttribute("filename", fnmae);
             // 업로드한 파일종류 알아내기
             m.addAttribute("filetype", attach.getContentType());
             // 업로드한 파일크기 알아내기
             m.addAttribute("filesize", attach.getSize()/1024);
 
             // 겹치지 않는 파일명 작성을 위해 유니크한 값 생성1
-            UUID uuid = UUID.randomUUID();
+            // 파일이름 + uuid + 확장자
+            // abc.jpg -> abc f9e3a0ba-cd0f-4031-bee2-900173d9d04a.jpg
+            String uuid = UUID.randomUUID().toString().replace("-",""); // uuid에서 "-" 제거하고 string으로 반환
+
             m.addAttribute("uuid", uuid);
+
+            // 파일이름과 확장자 분리하기
+            String fileName = fnmae.split("[.]")[0];
+            String fileExt = fnmae.split("[.]")[1];
 
 
             // 겹치지 않는 파일명 작성을 위해 유니크한 값 생성2
 
             // 업로드한 파일 저장하기
             attach.transferTo(new File("C:/Java/bootUpload/"
-                   + uuid + attach.getOriginalFilename()));
+                   + fileName + uuid + "." + fileExt));
         }
 
         return "pilot/list";
