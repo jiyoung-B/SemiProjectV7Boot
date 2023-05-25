@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriUtils;
@@ -93,5 +94,15 @@ public class PdsController {
 
         // 브라우저로 파일 전송하기
         return ResponseEntity.ok().headers(header).body(resource);
+    }
+
+    @GetMapping("/view")
+    public String view(@RequestParam int pno, Model m){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("pds", pdssrv.readPds(bno));
+        mv.addObject("attach", pdssrv.readPdsAttach(bno));
+
+
+        return "pds/view";
     }
 }
