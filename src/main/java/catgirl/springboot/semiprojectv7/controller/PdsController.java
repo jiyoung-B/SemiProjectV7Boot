@@ -89,7 +89,10 @@ public class PdsController {
         // 알아낸 uuid와 파일명을 이용해서 header와 리소스 객체 생성
         HttpHeaders header = pdssrv.getHeader(fname, uuid);
         UrlResource resource = pdssrv.getResource(fname, uuid);
-        
+
+        // 다운로드 수 증가
+
+        pdssrv.downfile(pno);
         return ResponseEntity.ok().headers(header).body(resource);
     }
 }

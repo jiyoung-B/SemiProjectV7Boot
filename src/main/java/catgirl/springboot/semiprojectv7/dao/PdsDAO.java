@@ -10,5 +10,9 @@ public interface PdsDAO {
     int insertPds(Pds pds);
     int insertPdsAttach(PdsAttach pa);
 
-    Map<String, Object> selectPds(int i);
+    Map<String, Object> selectPds(int cpg);
+    Pds selectOnePds(int pno);
+    PdsAttach selectOnePdsAttach(int pno);
+
+    void countDownload(int pno);
 }
