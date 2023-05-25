@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.Map;
 import java.util.UUID;
 
 @Controller
@@ -46,13 +47,14 @@ public class PdsController {
     @PostMapping("/write") // 전송된 데이터 처리
     public String writeok(Pds pds,
                           MultipartFile attach) throws IOException {
-
         String viewPage = "error";
 
-        int pno = pdssrv.newPds(pds);
+        Map<String, Object> pinfo = pdssrv.newPds(pds);
 
-        if (pdssrv.newPdsAttach(attach, pno))
-            viewPage = "redirect:/pds/list";
+        if(!attach.isEmpty())   // 첨부파일이 존재한다면
+            pdssrv.newPdsAttach(attach, pinfo);
+
+        viewPage = "redirect:/pds/list";
 
         return viewPage;
     }
