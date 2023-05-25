@@ -1,6 +1,5 @@
 package catgirl.springboot.semiprojectv7.controller;
 
-import catgirl.springboot.semiprojectv7.model.Board;
 import catgirl.springboot.semiprojectv7.model.Pds;
 import catgirl.springboot.semiprojectv7.service.PdsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,19 +13,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriUtils;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/pds")
@@ -35,8 +29,22 @@ public class PdsController {
     PdsService pdssrv;
 
     @GetMapping("/list")
-    public String list(){
-        return "pds/list";
+    public ModelAndView list(Integer cpg){
+        ModelAndView mv = new ModelAndView();
+
+        mv.setViewName("pds/list");
+        if (cpg == null || cpg == 0) cpg = 1;
+
+
+        Map<String, Object> bds = pdssrv.readBoard(cpg);
+
+        mv.addObject("pdslist", bds.get("pdslist"));
+        mv.addObject("cpg", cpg);
+        mv.addObject("stpg", ((cpg - 1) / 10) * 10 + 1); // startPage = ((cpg - 1) / 10) * 10 + 1);
+        mv.addObject("cntpg", bds.get("cntpg"));
+        //mv.setViewName("board/list");
+
+        return mv;
     }
     @GetMapping("/write")
     public String write(Model m){
