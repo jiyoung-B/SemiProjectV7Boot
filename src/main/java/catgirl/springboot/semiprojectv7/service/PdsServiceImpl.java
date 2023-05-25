@@ -5,9 +5,15 @@ import catgirl.springboot.semiprojectv7.model.Pds;
 import catgirl.springboot.semiprojectv7.model.PdsAttach;
 import catgirl.springboot.semiprojectv7.utils.PdsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.util.UriUtils;
 
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,5 +67,16 @@ public class PdsServiceImpl implements PdsService{
     @Override
     public PdsAttach readOnePdsAttach(int pno) {
         return pdsdao.selectOnePdsAttach(pno);
+    }
+
+    @Override
+    public HttpHeaders getHeader(String fname, String uuid) {
+
+        return pdsUtils.getHeader(fname, uuid);
+    }
+
+    @Override
+    public UrlResource getResource(String fname, String uuid) {
+        return pdsUtils.getResource(fname, uuid);
     }
 }

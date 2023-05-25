@@ -2,6 +2,8 @@ package catgirl.springboot.semiprojectv7.service;
 
 import catgirl.springboot.semiprojectv7.model.Pds;
 import catgirl.springboot.semiprojectv7.model.PdsAttach;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
@@ -19,4 +21,7 @@ public interface PdsService {
 
     PdsAttach readOnePdsAttach(int pno);
 
+    HttpHeaders getHeader(String fname, String uuid);
+
+    UrlResource getResource(String fname, String uuid);
 }

@@ -1,6 +1,7 @@
 package catgirl.springboot.semiprojectv7.controller;
 
 import catgirl.springboot.semiprojectv7.model.Pds;
+import catgirl.springboot.semiprojectv7.model.PdsAttach;
 import catgirl.springboot.semiprojectv7.service.PdsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -68,41 +69,27 @@ public class PdsController {
         return viewPage;
     }
 
-    @GetMapping("/down")
-    public ResponseEntity<Resource> down(int pno) throws IOException {
-        // 다운로드 전송할 파일 식별
-        String savePath = "C:/Java/bootUpload/";
-        String fname = "";
-        if(pno == 1) fname = "cat.jpg";
-        else if(pno == 2) fname = "write.html";
-        else if(pno == 3) fname = "catzip.zip";
-
-        // 파일이름에 한글이 포함된 경우 적절한 인코딩 작업 수행
-        fname = UriUtils.encode(fname, StandardCharsets.UTF_8);
-
-        // 다운로드할 파일 객체 생성
-        UrlResource resource =
-                new UrlResource("file:" + savePath + fname);
-
-        // MIME 타입 지정
-        // 브라우저에 다운로드할 파일에 대한 정보 제공
-        HttpHeaders header = new HttpHeaders();
-        header.add("Content-Type",
-                Files.probeContentType(Paths.get(savePath+fname)));
-        header.add("Content-Disposition",
-                "attachment; filename=" + fname + "");
-
-        // 브라우저로 파일 전송하기
-        return ResponseEntity.ok().headers(header).body(resource);
-    }
-
     @GetMapping("/view")
     public String view(@RequestParam int pno, Model m){
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("pds", pdssrv.readOnePds(pno));
-        mv.addObject("attach", pdssrv.readOnePdsAttach(pno));
+
+        m.addAttribute("pds", pdssrv.readOnePds(pno));
+        m.addAttribute("attach", pdssrv.readOnePdsAttach(pno));
 
 
         return "pds/view";
+    }
+
+    @GetMapping("/down")
+    public ResponseEntity<Resource> down(int pno) {
+        
+        // 업로드 파일의 uuid와 파일명 알아냄
+        String uuid = pdssrv.readOnePds(pno).getUuid();
+        String fname = pdssrv.readOnePdsAttach(pno).getFname();
+        
+        // 알아낸 uuid와 파일명을 이용해서 header와 리소스 객체 생성
+        HttpHeaders header = pdssrv.getHeader(fname, uuid);
+        UrlResource resource = pdssrv.getResource(fname, uuid);
+        
+        return ResponseEntity.ok().headers(header).body(resource);
     }
 }
