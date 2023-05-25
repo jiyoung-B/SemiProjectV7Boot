@@ -37,12 +37,12 @@ public class PdsController {
         if (cpg == null || cpg == 0) cpg = 1;
 
 
-        Map<String, Object> bds = pdssrv.readBoard(cpg);
+        Map<String, Object> pds = pdssrv.readPds(cpg);
 
-        mv.addObject("pdslist", bds.get("pdslist"));
+        mv.addObject("pdslist", pds.get("pdslist"));
         mv.addObject("cpg", cpg);
         mv.addObject("stpg", ((cpg - 1) / 10) * 10 + 1); // startPage = ((cpg - 1) / 10) * 10 + 1);
-        mv.addObject("cntpg", bds.get("cntpg"));
+        mv.addObject("cntpg", pds.get("cntpg"));
         //mv.setViewName("board/list");
 
         return mv;
@@ -99,8 +99,8 @@ public class PdsController {
     @GetMapping("/view")
     public String view(@RequestParam int pno, Model m){
         ModelAndView mv = new ModelAndView();
-        mv.addObject("pds", pdssrv.readPds(bno));
-        mv.addObject("attach", pdssrv.readPdsAttach(bno));
+        mv.addObject("pds", pdssrv.readOnePds(pno));
+        mv.addObject("attach", pdssrv.readOnePdsAttach(pno));
 
 
         return "pds/view";

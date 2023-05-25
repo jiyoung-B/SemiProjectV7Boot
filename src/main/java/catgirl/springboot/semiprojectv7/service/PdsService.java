@@ -1,6 +1,7 @@
 package catgirl.springboot.semiprojectv7.service;
 
 import catgirl.springboot.semiprojectv7.model.Pds;
+import catgirl.springboot.semiprojectv7.model.PdsAttach;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Map;
@@ -12,5 +13,10 @@ public interface PdsService {
     //boolean newPdsAttach(MultipartFile attach, int pno);
     boolean newPdsAttach(MultipartFile attach, Map<String, Object> pinfo);
 
-    Map<String, Object> readBoard(Integer cpg);
+    Map<String, Object> readPds(Integer cpg);
+
+    Pds readOnePds(int pno);
+
+    PdsAttach readOnePdsAttach(int pno);
+
 }
