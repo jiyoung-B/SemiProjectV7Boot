@@ -39,4 +39,16 @@ public class PdsDAOImpl implements PdsDAO{
         pds.put("cntpg", pdsRepository.findAll(paging).getTotalPages());
         return pds;
     }
+
+    @Override
+    public Pds selectOnePds(int pno) {
+        pdsRepository.countViewById(pno); // 조회수 증가
+        return pdsRepository.findById((long)pno).get();
+    }
+
+    @Override
+    public PdsAttach selectOnePdsAttach(int pno) {
+        //return pdsaRepository.findById((long)pno).get();
+        return pdsaRepository.findByPno(pno);
+    }
 }
