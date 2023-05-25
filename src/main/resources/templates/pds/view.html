@@ -48,6 +48,7 @@
                 <tr><td class="vcont" colspan="2" th:text="${pds.content}">뭐야 왜 안나와</td></tr>
 
                 <tr><td class="vinfo" colspan="2">
+                    <img width="35" height="35" th:src="|/assets/img/ftype/${attach.ftype}.png|" alt="">
                     <a th:href="|/pds/down?pno=${pds.pno}|" th:text="${attach.fname}"></a>
                     <span th:text="|(${attach.fsize} KB/${attach.fdown}회 다운로드)|"></span>
                     </td>
