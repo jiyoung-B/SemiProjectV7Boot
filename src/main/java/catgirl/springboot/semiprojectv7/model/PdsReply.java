@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 @Entity
-public class pdsreply {
+public class PdsReply {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,8 +23,8 @@ public class pdsreply {
     private String reply;
     @NotBlank(message = "작성자는 필수 입력항목입니다!!")
     private String userid;
-    private Long pno;
-    private Long refno;
+    private int  pno;
+    private int  refno;
 
     @CreatedDate
     @Column(insertable = false, updatable = false)
