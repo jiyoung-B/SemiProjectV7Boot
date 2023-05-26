@@ -126,7 +126,7 @@
         <div class="offset-2 col-8">
             <form name="rpfrm" id="rpfrm" class="bg-light p-3">
                 <div class="row align-items-center">
-                    <label class="col-2 form-label">로그인하세요</label>
+                    <label class="col-2 form-label">[[${session.UID}]]</label>
 
                     <div class="col-8">
                                 <textarea id="reply" name="reply"
@@ -138,7 +138,7 @@
                             <i class="fa fa-commenting"></i> 댓글쓰기</button>
                     </div>
                     <input type="hidden" name="userid" id="userid" th:value="${session.UID}"> <!--왜 hidden으로 받아온다고?-->
-                    <input type="hidden" name="userid" id="pno" th:value="${pds.pno}"> <!--몇번 게시글에 해당하는지-->
+                    <input type="hidden" name="pno" id="pno" th:value="${pds.pno}"> <!--몇번 게시글에 해당하는지-->
                 </div>
             </form>
         </div>
