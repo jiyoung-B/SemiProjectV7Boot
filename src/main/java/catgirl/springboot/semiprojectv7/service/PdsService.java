@@ -2,6 +2,7 @@ package catgirl.springboot.semiprojectv7.service;
 
 import catgirl.springboot.semiprojectv7.model.Pds;
 import catgirl.springboot.semiprojectv7.model.PdsAttach;
+import catgirl.springboot.semiprojectv7.model.PdsReply;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,4 +30,8 @@ public interface PdsService {
     void downfile(int pno);
 
     List<String> readFtype();
+
+    List<PdsReply> readPdsReply(int pno);
+    boolean newReply(PdsReply reply);
+
 }

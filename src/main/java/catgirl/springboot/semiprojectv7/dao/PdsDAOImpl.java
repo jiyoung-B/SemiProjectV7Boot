@@ -2,6 +2,8 @@ package catgirl.springboot.semiprojectv7.dao;
 
 import catgirl.springboot.semiprojectv7.model.Pds;
 import catgirl.springboot.semiprojectv7.model.PdsAttach;
+import catgirl.springboot.semiprojectv7.model.PdsReply;
+import catgirl.springboot.semiprojectv7.repository.PdsReplyRepository;
 import catgirl.springboot.semiprojectv7.repository.PdsRepository;
 import catgirl.springboot.semiprojectv7.repository.PdsaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class PdsDAOImpl implements PdsDAO{
     PdsRepository pdsRepository;
     @Autowired
     PdsaRepository pdsaRepository;
+    @Autowired
+    PdsReplyRepository pdsReplyRepository;
     @Override
     public int insertPds(Pds pds) {
         // 제목, 작성자, 본문을 pds테이블에 저장한 뒤
@@ -62,4 +66,21 @@ public class PdsDAOImpl implements PdsDAO{
     public List<String> selectFtype() {
         return pdsaRepository.findByFtypes();
     }
+
+    @Override
+    public List<PdsReply> selectPdsReply(int pno) {
+        return pdsReplyRepository.findByPnoOrderByRefnoAscRegdateAsc(pno);
+    }
+
+    @Override
+    public int insertReply(PdsReply reply) {
+        PdsReply p =  pdsReplyRepository.save(reply);
+        int rpno = Math.toIntExact(p.getRpno());
+
+        pdsReplyRepository.updateRefno(rpno);
+
+        return Math.toIntExact(p.getRpno());
+    }
+
+
 }

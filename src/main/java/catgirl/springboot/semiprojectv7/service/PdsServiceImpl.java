@@ -3,17 +3,15 @@ package catgirl.springboot.semiprojectv7.service;
 import catgirl.springboot.semiprojectv7.dao.PdsDAO;
 import catgirl.springboot.semiprojectv7.model.Pds;
 import catgirl.springboot.semiprojectv7.model.PdsAttach;
+import catgirl.springboot.semiprojectv7.model.PdsReply;
+import catgirl.springboot.semiprojectv7.repository.PdsReplyRepository;
 import catgirl.springboot.semiprojectv7.utils.PdsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.UriUtils;
 
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,5 +88,20 @@ public class PdsServiceImpl implements PdsService{
     @Override
     public List<String> readFtype() {
         return pdsdao.selectFtype();
+    }
+
+    @Override
+    public List<PdsReply> readPdsReply(int pno) {
+        return pdsdao.selectPdsReply(pno);
+    }
+
+    @Override
+    public boolean newReply(PdsReply reply) {
+        boolean result = false;
+
+        if(pdsdao.insertReply(reply) > 0)
+            result = true;
+
+        return result;
     }
 }
