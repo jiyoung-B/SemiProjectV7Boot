@@ -12,3 +12,24 @@ writebtn?.addEventListener('click', () => {
     }
 
 });
+
+// 목록보기
+const newbtn = document.querySelector("#newbtn");
+newbtn?.addEventListener('click', () => {
+    location.href = '/pds/write';
+})
+
+// 댓글쓰기
+const rpnewbtn = document.querySelector("#rpnewbtn");
+rpnewbtn?.addEventListener('click', () => {
+    const rpfrm = document.forms.rpfrm;
+    if(rpfrm.reply.value === '') alert('댓글을 작성하세요!');
+    else if(rpfrm.userid.value === '') alert('작성자가 없어요!');
+    else if(rpfrm.pno.value === '') alert('본문글번호 없어요!');
+    else {
+        rpfrm.method = 'post';
+        rpfrm.action = '/pds/replyok';
+        rpfrm.submit();
+    }
+
+});
