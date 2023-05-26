@@ -34,4 +34,5 @@ public interface PdsService {
     List<PdsReply> readPdsReply(int pno);
     boolean newReply(PdsReply reply);
 
+    boolean newRreply(PdsReply reply);
 }

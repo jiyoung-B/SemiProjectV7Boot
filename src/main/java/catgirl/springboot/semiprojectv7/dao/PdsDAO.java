@@ -21,5 +21,9 @@ public interface PdsDAO {
     List<String> selectFtype();
     List<PdsReply> selectPdsReply(int pno);
 
+    // 댓글
     int insertReply(PdsReply reply);
+
+    // 대댓글
+    int insertRreply(PdsReply reply);
 }
