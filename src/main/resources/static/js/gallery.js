@@ -1,6 +1,23 @@
 // 이미지 첨부 조건 검사
 const checkAttaches = () => {
-
+    const attaches = document.querySelector('#attachs')
+    // 이미지 첨부파일이 하나 이상이라면
+    if('files' in attaches && attaches.files.length > 0) {
+        // input태그 이름 . files 형태
+        // url에 접근하려면 .value로 못 가져옴.
+        for (attache of attaches.files) {
+        //console.log(attache.name + ',' + attache.type + ',' + attache.size);
+            // 이미지 파일의 MIME 형식
+            // image/jpg,image/jpeg,image/png,image/gif
+            if(!attache.type.startsWith('image')){
+                alert('첨부하려는 파일은 반드시 이미지여야 합니다!');
+                return false;
+            }
+        }
+    } else{
+        alert('하나 이상의 이미지를 선택하세요!!');
+    }
+    return false;
 }
 // 새글쓰기
 const writebtn = document.querySelector("#writebtn");
