@@ -2,11 +2,15 @@ package catgirl.springboot.semiprojectv7.utils;
 
 import catgirl.springboot.semiprojectv7.model.GalAttach;
 import catgirl.springboot.semiprojectv7.model.PdsAttach;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -20,7 +24,7 @@ public class GalleryUtils {
     private String saveImgDir;
 
     public String makeUUID(){
-        String uuid = LocalDateTime.now() + "" + LocalTime.now();
+        String uuid = LocalDate.now() + "" + LocalTime.now();
         uuid = uuid.replace("-", "")
                 .replace(":", "")
                 .replace(".", "");
@@ -80,5 +84,42 @@ public class GalleryUtils {
         }
 
     public void makeThumbnail(GalAttach ga, Object uuid) {
+        // 업로드된 이미지들 중 첫번째 이미지에 대해 썸네일 생성
+        // 파일이름들을 ;으로 나눈 뒤 첫번째 파일명을 추출
+        String basename = ga.getFname().split(";")[0];
+
+        // 서버에 업로드된 파일 경로로 재정의 : 썸네일 생성시 참고할 파일
+        String refname = saveImgDir + basename;
+
+        // 썸네일 이미지 경로 정의
+        String thumbname = saveImgDir + "_thumbs/small_" + basename;
+        System.out.println(refname+ ","+ thumbname);
+
+        try{
+            // 원본이미지를 읽어서 메모리에 이미지객체(컨버스)를 생성
+            BufferedImage img = ImageIO.read(new File(refname));
+
+            // 이미ㅣㅈ 크기 추륻
+            int imgW = Math.min(img.getHeight(), img.getWidth() / 2);
+            int imgH =imgW;
+
+            // 지정한 위치를 기준으로 잘라냄
+            // crop(대상, x좌표, y좌표, 잘라낼너비, 잘라낼높이, 투명도)
+            BufferedImage scaleImg = Scalr.crop(img,
+                    (img.getWidth() - imgW) / 2,  // crop할 좌표
+                    (img.getHeight() - imgH) / 2,
+                    imgW, imgH, // crop할 이미지 크기
+                    null);
+            // 잘라낸 이미지를 330x350 크기로 재조정
+            BufferedImage resizeImg = Scalr.resize(
+                    scaleImg, 330, 350, null);
+
+            // 재조정한 이미지를 실제 경로에 저장
+            ImageIO.write(resizeImg, "png", new File(thumbname));
+
+        }catch (Exception ex){
+            ex.printStackTrace();
+
+        }
     }
 }
